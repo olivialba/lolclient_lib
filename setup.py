@@ -1,5 +1,8 @@
 from setuptools import setup, find_packages
 
+with open('README.md', 'r', encoding='utf-8') as file:
+    long_description = file.read()
+
 VERSION = '0.0.1'
 DESCRIPTION = 'Basic package to send and receive requests to the League of Legends client'
 
@@ -10,6 +13,8 @@ setup(
     author="Albaq (Alberto Olivi)",
     author_email="olivialberto02@gmail.com",
     description=DESCRIPTION,
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     packages=find_packages(),
     license='MIT',
     url='https://github.com/olivialba',
