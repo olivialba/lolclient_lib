@@ -8,7 +8,7 @@ setup(
     name="lolclient-lib",
     version=VERSION,
     author="Albaq (Alberto Olivi)",
-    author_email="<olivialberto02@gmail.com>",
+    author_email="olivialberto02@gmail.com",
     description=DESCRIPTION,
     packages=find_packages(),
     license='MIT',
