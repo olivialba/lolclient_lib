@@ -1,6 +1,6 @@
 import json, requests
 from enum import Enum
-from lolclient.request import createUrl
+from lolclient.request import createUrl, certSSL
 
 
 #####################################
@@ -35,7 +35,7 @@ def createLobby(reqInfo: dict, lobbyId: Lobby):
     """
     url = createUrl(reqInfo['url'], '/lol-lobby/v2/lobby')
     queue = {"queueId":lobbyId.value}
-    requests.post(url, json=queue, headers=reqInfo['header'], verify=False)
+    requests.post(url, json=queue, headers=reqInfo['header'], verify=certSSL())
     
     
 def createLobbyCustom(reqInfo: dict, teamSize: int):
@@ -57,7 +57,7 @@ def createLobbyCustom(reqInfo: dict, teamSize: int):
         },
         "isCustom": True
     }
-    requests.post(url, json=queue, headers=reqInfo['header'], verify=False)
+    requests.post(url, json=queue, headers=reqInfo['header'], verify=certSSL())
 
 
 def getLobbyInfo(reqInfo: dict) -> dict:
@@ -65,7 +65,7 @@ def getLobbyInfo(reqInfo: dict) -> dict:
     Get some lobby info
     """
     url = createUrl(reqInfo['url'], '/lol-lobby/v2/lobby')
-    json_data = json.loads((requests.get(url, headers=reqInfo['header'], verify=False)).text)
+    json_data = json.loads((requests.get(url, headers=reqInfo['header'], verify=certSSL())).text)
     return json_data
 
 
@@ -74,7 +74,7 @@ def startMatchmaking(reqInfo: dict):
     Send a POST request to start the matchmaking from a lobby.
     """
     url = createUrl(reqInfo['url'], '/lol-lobby/v2/lobby/matchmaking/search')
-    requests.post(url, headers=reqInfo['header'], verify=False)
+    requests.post(url, headers=reqInfo['header'], verify=certSSL())
 
 
 def matchmakingAccept(reqInfo: dict):
@@ -82,7 +82,7 @@ def matchmakingAccept(reqInfo: dict):
     Send a POST request to accept a match
     """
     url = createUrl(reqInfo['url'], '/lol-matchmaking/v1/ready-check/accept')
-    requests.post(url, headers=reqInfo['header'], verify=False)
+    requests.post(url, headers=reqInfo['header'], verify=certSSL())
     
     
 def matchmakingDecline(reqInfo: dict):
@@ -90,7 +90,7 @@ def matchmakingDecline(reqInfo: dict):
     Send a POST request to decline a match
     """
     url = createUrl(reqInfo['url'], '/lol-matchmaking/v1/ready-check/decline')
-    requests.post(url, headers=reqInfo['header'], verify=False)
+    requests.post(url, headers=reqInfo['header'], verify=certSSL())
     
     
 def getGameMode(reqInfo: dict) -> dict:
@@ -106,7 +106,7 @@ def getGameMode(reqInfo: dict) -> dict:
     Returns `None` if user is not in champ select.
     """
     url = createUrl(reqInfo['url'], '/lol-gameflow/v1/session')
-    json_data = json.loads((requests.get(url, headers=reqInfo['header'], verify=False)).text)
+    json_data = json.loads((requests.get(url, headers=reqInfo['header'], verify=certSSL())).text)
     try:
         result = {
             'gamemode' : json_data['gameData']['queue']['gameMode'],
@@ -125,7 +125,7 @@ def isRanked(reqInfo: dict) -> bool:
     - Returns `True` or `False`
     """
     url = createUrl(reqInfo['url'], '/lol-gameflow/v1/session')
-    json_data = json.loads((requests.get(url, headers=reqInfo['header'], verify=False)).text)
+    json_data = json.loads((requests.get(url, headers=reqInfo['header'], verify=certSSL())).text)
     try:
         is_ranked = json_data['gameData']['queue']['isRanked']
         return is_ranked

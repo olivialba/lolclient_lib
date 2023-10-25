@@ -18,13 +18,11 @@ def clientInfo(path: str = 'C:/Riot Games/League of Legends/lockfile') -> dict:
         return readLockFile(path)
     else:
         return None
-
-
-def readLockFile(path) -> dict:
-    """
-    Read Lockfile info.
     
-    Returns a dictionary with the base `url` and the `header` for making requests
+    
+def readLockFile(path: str = 'C:/Riot Games/League of Legends/lockfile') -> dict:
+    """
+    Return everything from the lockfile. No formatting.
     """
     with open(path, 'r') as lockfile:
         lockfile = lockfile.read()
@@ -38,12 +36,11 @@ def readLockFile(path) -> dict:
             "Authorization": f"Basic {encoded_auth}",
         }
         
-        url = "https://127.0.0.1:" + data[2]
-        header = headers
-        
         reqInfo = {
-            'url': url,
-            'header': headers
+            'url': "https://127.0.0.1:" + data[2],
+            'header': headers,
+            'port': data[2],
+            'encoded_auth': encoded_auth
         }
     
         return reqInfo

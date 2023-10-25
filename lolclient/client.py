@@ -1,5 +1,5 @@
 import requests, json
-from lolclient.request import createUrl
+from lolclient.request import createUrl, certSSL
 
 
 #####################################
@@ -15,7 +15,7 @@ def getSummonerName(reqInfo: dict) -> str:
     - Returns a string
     """
     url = createUrl(reqInfo['url'], '/lol-summoner/v1/current-summoner')
-    json_data = json.loads((requests.get(url, headers=reqInfo['header'], verify=False)).text)
+    json_data = json.loads((requests.get(url, headers=reqInfo['header'], verify=certSSL())).text)
     return json_data['displayName']
 
 
@@ -26,7 +26,7 @@ def getGamePhase(reqInfo: dict) -> str:
     Can return `Lobby`, `ChampSelect`, `GameStart`, `InProgress`, `WaitingForStats`
     """
     url = createUrl(reqInfo['url'], '/lol-gameflow/v1/gameflow-phase')
-    json_data = json.loads((requests.get(url, headers=reqInfo['header'], verify=False)).text)
+    json_data = json.loads((requests.get(url, headers=reqInfo['header'], verify=certSSL())).text)
     return json_data
 
 
@@ -63,7 +63,7 @@ def getChampStats(reqInfo: dict, championId, position, tier, queue) -> dict:
     INFO: use `rank5solo` as others may not always work, blame the API.
     """
     url = createUrl(reqInfo['url'], f'/lol-career-stats/v1/champion-averages/{championId}/{position}/{tier}/{queue}')
-    response = requests.get(url, headers=reqInfo['header'], verify=False)
+    response = requests.get(url, headers=reqInfo['header'], verify=certSSL())
     if response.status_code == 200:
         return json.loads(response.text)
     else:

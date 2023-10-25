@@ -1,6 +1,6 @@
 import json, requests
 from lolclient.client import getChampFromId
-from lolclient.request import createUrl
+from lolclient.request import createUrl, certSSL
 
 
 #####################################
@@ -16,7 +16,7 @@ def getChampSelected(reqInfo: dict) -> dict:
     - Returns the `Champion Dictionary` or `None` if you haven't selected a champion
     """
     url = createUrl(reqInfo['url'], '/lol-champ-select/v1/session/my-selection')
-    json_data = json.loads((requests.get(url, headers=reqInfo['header'], verify=False)).text)
+    json_data = json.loads((requests.get(url, headers=reqInfo['header'], verify=certSSL())).text)
     try:
         champId = json_data['championId']
         if champId == 0:

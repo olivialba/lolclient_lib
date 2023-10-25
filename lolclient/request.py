@@ -1,4 +1,4 @@
-import requests, json
+import os, requests, json
 
 #####################################
 ##                                 ##
@@ -30,3 +30,12 @@ def getRequestJson(reqInfo: dict, endpoint: str):
     - Returns a json text, usually a dictionary
     """    
     return json.loads((getRequest(reqInfo, endpoint)).text)
+
+
+def certSSL():
+    '''
+    The LCU API uses a self signed certificate. This will return the path of the certificate given by the LCU API.
+    Certificate can be found on the LCU API faq page: https://hextechdocs.dev/lcu-api-faq/
+    '''
+    current_module_directory = os.path.dirname(__file__)
+    return os.path.join(current_module_directory, 'riotgames.pem')

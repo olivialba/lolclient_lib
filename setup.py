@@ -3,8 +3,8 @@ from setuptools import setup, find_packages
 with open('README.md', 'r', encoding='utf-8') as file:
     long_description = file.read()
 
-VERSION = '0.0.3'
-DESCRIPTION = 'Basic package to send and receive requests from the League of Legends client with added functionalities to make requests easier'
+VERSION = '0.0.4'
+DESCRIPTION = 'Basic package to send and receive requests from the League of Legends client'
 
 # Setting up
 setup(
